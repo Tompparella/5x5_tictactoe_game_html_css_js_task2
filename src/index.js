@@ -150,7 +150,6 @@ function check_win(box) {
       if (table[i][i] === player) {
         row_count++;
       } else {
-        console.log(row_count);
         row_count = 0;
         break;
       }
