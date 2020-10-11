@@ -11,7 +11,7 @@ var h = " ";
 var counter;
 var intervalId;
 
-const progressBar = document.getElementsByClassName("progressBar")[0];
+const progressBar = document.getElementsByClassName("determinate")[0];
 
 document.getElementById("reset").addEventListener("click", reset_game);
 
@@ -19,18 +19,17 @@ var turn = 1;
 
 function setProgress() {
   counter = 10;
-  progressBar.style.setProperty("--width", 10);
-  progressBar.setAttribute("data-label", "10");
+  progressBar.style.width = "100%";
+
   intervalId = setInterval(() => {
-    const computedStyle = getComputedStyle(progressBar);
-    const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0;
+    const width = progressBar.offsetWidth;
+
     counter = width;
     if (counter <= 0) {
       changeTurn();
       return;
     }
-    progressBar.style.setProperty("--width", width - 0.01);
-    progressBar.setAttribute("data-label", width);
+    progressBar.style.width = width - 0.01;
   }, 10);
 }
 
@@ -54,21 +53,24 @@ function create_table() {
   var count = 0;
 
   for (i = 0; i < 5; i++) {
-    var newrow = board.insertRow(i);
+    var newrow = document.createElement("row");
+    newrow.setAttribute("class", "row");
+    board.appendChild(newrow);
     newrow.id = i;
     for (var j = 0; j < 5; j++) {
       table[i][j] = h;
-      var newbox = newrow.insertCell(j);
+      var newbox = document.createElement("col");
+      newrow.appendChild(newbox);
       newbox.innerHTML = h;
       newbox.id = count;
-      newbox.setAttribute("class", "box");
+      newbox.setAttribute("class", "col s1");
       count++;
     }
     set_click_listeners();
   }
 }
 function set_click_listeners() {
-  boxes = document.getElementsByClassName("box");
+  boxes = document.getElementsByClassName("col s1");
   for (var i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("click", function () {
       mark_box(this.id);
