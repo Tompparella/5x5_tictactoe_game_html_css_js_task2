@@ -42,7 +42,6 @@ function changeTurn() {
     playerTurn.textContent = "Turn: Player 1";
   }
   turn++;
-
   setProgress();
 }
 
@@ -90,8 +89,8 @@ function mark_box(id) {
         table[curr_row][curr_col] = "O";
         boxes[id].style.background = "rgb(250, 128, 114)";
       }
-      changeTurn();
       check_win(boxes[id]);
+      changeTurn();
     }
   }
 }
@@ -151,6 +150,7 @@ function check_win(box) {
       if (table[i][i] === player) {
         row_count++;
       } else {
+        console.log(row_count);
         row_count = 0;
         break;
       }
